@@ -1,75 +1,241 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Models\Flower;
+use OpenApi\Annotations as OA;
+
+/**
+ * Class FlowerController.
+ * @author Katherin <katherin.422023011@civitas.ukrida.ac.id>
+ */
 
 class FlowerController extends Controller
 {
-    // Display a listing of the item.
-    // *  @return \Illuminate\Http\Response
+    /**
+     * @OA\Get (
+     *      path="/api/flowers",
+     *      tags={"flower"},
+     *      description="Display a listing of items",
+     *      operationId="index",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful",
+     *          @OA\JsonContent()
+     *      )
+     * )
+     */
+
     public function index()
     {
         return Flower::get();
     }
 
-    /* Store a newly created item in storage.
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+    /**
+     * @OA\Post(
+     *    path="/api/flowers",
+     *    tags={"flower"},
+     *    summary="Store a newly created item",
+     *    operationId="store",
+     *    @OA\RequestBody(
+     *        required=true,
+     *        description="Request body description",
+     *        @OA\JsonContent(
+     *            ref="#/components/schemas/Flower",
+     *            example={
+     *                "typeflower": "Tulip", 
+     *                "florist": "kezia",
+     *                "price": 85000, 
+     *                "description": "With flower we can know what they want to tell without really speakup"
+     *            }
+     *        )
+     *    ),
+     *    @OA\Response(
+     *        response=201,
+     *        description="Successful",
+     *        @OA\JsonContent()
+     *    )
+     * )
      */
     public function store(Request $request)
     {
         try {
+            $validator = Validator::make($request->all(),[
+                'typeflower' => 'required|unique:flowers',
+                'florist' => 'required|max:100',
+            ]);
+            if ($validator->fails()){
+                throw new HttpException(400, $validator->messages()->first());
+            }
             $flower = new Flower;
-            $flower->fill($request->validated())->save();
+            $flower->fill($request->all())->save();
 
             return $flower;
 
-        } catch (Exception $exception) {
-            throw new HttpException(400, "Invalid data - ($exception->getMessage()}");
+        } catch (\Exception $exception) {
+            throw new HttpException(400, "Invalid data : {$exception->getMessage()}");
         }
     }
 
-    /* Display the specified item.
-     * @param int $id
-     * @return \Illuminate\Http\Response
+    /**
+     * @OA\Get(
+     *     path="/api/flowers/{id}",
+     *     tags={"flower"},
+     *     summary="Display the specified item",
+     *     operationId="show",
+     *     @OA\Response(
+     *         response=404,
+     *         description="item not found",
+     *         @OA\JsonContent()
+     *     ),
+     *     @OA\Response(
+     *          response=400,
+     *          description="Invalid input",
+     *          @OA\JsonContent()
+     *     ),
+     *     @OA\Response(
+     *          response=200,
+     *          description="Successful",
+     *          @OA\JsonContent()
+     *     ),
+     *     @OA\Parameter(
+     *          name="id",
+     *          in="path",
+     *          description="ID of item that needs to be displayed",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer",
+     *              format="int64"
+     *          )
+     *     )
+     * )
      */
     public function show($id)
     {
-        $flower = Flower::findOrFail($id);
+        $flower = Flower::find($id);
+        if (!$flower) {
+            throw new HttpException(404, 'Item not found');
+        }
         return $flower;
     }
 
-    // Update the specified item in storage.
-    // @param \Illuminate\Http\Request $request
-    // @param int $id
-    // @return \Illuminate\Http\Response
+    /**
+     * @OA\Put(
+     *     path="/api/flowers/{id}",
+     *     tags={"flower"},
+     *     summary="Update the specified item",
+     *     operationId="update",
+     *     @OA\RequestBody(
+     *        required=true,
+     *        description="Request body description",
+     *        @OA\JsonContent(
+     *            ref="#/components/schemas/Flower",
+     *            example={
+     *                "typeflower": "Tulip", 
+     *                "florist": "kezia",
+     *                "price": 85000, 
+     *                "description": "With flower we can know what they want to tell without really speakup"
+     *            }
+     *        )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Item not found",
+     *         @OA\JsonContent()
+     *     ),
+     *     @OA\Response(
+     *          response=400,
+     *          description="Invalid input",
+     *          @OA\JsonContent()
+     *     ),
+     *     @OA\Response(
+     *          response=200,
+     *          description="Successful",
+     *          @OA\JsonContent()
+     *     ),
+     *     @OA\Parameter(
+     *          name="id",
+     *          in="path",
+     *          description="ID of item that needs to be updated",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer",
+     *              format="int64"
+     *          )
+     *     )
+     * )
+     */
     public function update(Request $request, $id)
     {
-        if (!$id) {
-            throw new HttpException(400, "Invalid id");
+        $flower = Flower::find($id);
+        if (!$flower) {
+            throw new HttpException(400, "Item not found");
         }
 
         try {
-            $flower = Flower::find($id);
-            $flower->fill($request->validated())->save();
-            return $flower;
-        } catch (Exception $exception) {
-            throw new HttpException(400, "Invalid data ($exception->getMessage()}");
+            $validator = Validator::make($request->all(), [
+                'typeflower' => 'required|unique:flowers',
+                'florist' => 'required|max:100',
+            ]);
+            if ($validator->fails()) {
+                throw new HttpException(400, $validator->messages()->first());
+            }
+            $flower->fill($request->all())->save();
+            return response()->json(['message' => 'Updated successfully'], 200);
+        } catch (\Exception $exception) {
+            throw new HttpException(400, "Invalid data ({$exception->getMessage()})");
         }
     }
 
-    // Remove the specified item from storage.
-    // @param int $id
-    // @return \Illuminate\Http\Response
+    /**
+     * @OA\Delete(
+     *      path="/api/flowers/{id}",
+     *      tags={"flower"},
+     *      summary="Remove the specified item",
+     *      operationId="destroy",
+     *      @OA\Response(
+     *          response=404,
+     *          description="Item not found",
+     *          @OA\JsonContent()
+     *      ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Invalid input",
+     *          @OA\JsonContent()
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful",
+     *          @OA\JsonContent()
+     *      ),
+     *      @OA\Parameter(
+     *          name="id",
+     *          in="path",
+     *          description="ID of item that needs to be removed",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer",
+     *              format="int64"
+     *          )
+     *      )
+     * )
+     */
     public function destroy($id)
     {
-        $flower = Flower::findOrFail($id);
-        $flower->delete();
-        return response()->json(null, 204);
+        $flower = Flower::find($id);
+        if (!$flower) {
+            throw new HttpException(404, 'Item not found');
+        }
+
+        try {
+            $flower->delete();
+            return response()->json(['message' => 'Deleted successfully'], 200);
+        } catch (\Exception $exception) {
+            throw new HttpException(400, "Invalid data: {$exception->getMessage()}");
+        }
     }
 }

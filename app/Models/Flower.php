@@ -2,9 +2,25 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+// use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\User;
+use OpenApi\Annotations as OA ;
+
+/**
+ * Class Flower.
+ * 
+ * @author Katherin <katherin.422023011@civitas.ukrida.ac.id>
+ * 
+ * @OA\Schema(
+ *     description="Flower model",
+ *     title="Flower model",
+ *     required={"typeflower","florist"},
+ *     @OA\Xml(
+ *          name="Flower")
+ * )
+ */
 
 class Flower extends Model
 {
@@ -22,6 +38,7 @@ class Flower extends Model
         'deleted_at',
         'deleted_by'
     ];
+
     protected $dates = ['deleted_at'];  
     public function data_adder(){   
         return $this ->belongsTo(User::class, 'created_by','id');
