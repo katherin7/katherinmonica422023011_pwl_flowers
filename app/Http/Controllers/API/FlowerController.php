@@ -47,6 +47,7 @@ class FlowerController extends Controller
      *        @OA\JsonContent(
      *            ref="#/components/schemas/Flower",
      *            example={
+     *                "id" : 5,
      *                "typeflower": "Tulip", 
      *                "florist": "kezia",
      *                "price": 85000, 
@@ -135,6 +136,7 @@ class FlowerController extends Controller
      *        @OA\JsonContent(
      *            ref="#/components/schemas/Flower",
      *            example={
+     *                "id":5,
      *                "typeflower": "Tulip", 
      *                "florist": "kezia",
      *                "price": 85000, 
