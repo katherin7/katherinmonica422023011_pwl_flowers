@@ -18,7 +18,7 @@
                 "tags": [
                     "flower"
                 ],
-                "description": "Display a listing of items",
+                "summary": "Display a listing of items",
                 "operationId": "index",
                 "responses": {
                     "200": {

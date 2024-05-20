@@ -20,7 +20,7 @@ class FlowerController extends Controller
      * @OA\Get (
      *      path="/api/flowers",
      *      tags={"flower"},
-     *      description="Display a listing of items",
+     *      summary="Display a listing of items",
      *      operationId="index",
      *      @OA\Response(
      *          response=200,
