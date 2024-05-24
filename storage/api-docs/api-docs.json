@@ -13,7 +13,7 @@
         }
     },
     "paths": {
-        "/api/flowers": {
+        "/api/flower": {
             "get": {
                 "tags": [
                     "flower"
@@ -49,6 +49,7 @@
                                 "id": 5,
                                 "typeflower": "Tulip",
                                 "florist": "kezia",
+                                "cover": "https://th.bing.com/th/id/OIP.7pUhm2B52MhYIWgN1AWTGAHaHY?rs=1&pid=ImgDetMain",
                                 "price": 85000,
                                 "description": "With flower we can know what they want to tell without really speakup"
                             }
@@ -56,6 +57,14 @@
                     }
                 },
                 "responses": {
+                    "400": {
+                        "description": "invalid Input",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
                     "201": {
                         "description": "Successful",
                         "content": {
@@ -67,7 +76,7 @@
                 }
             }
         },
-        "/api/flowers/{id}": {
+        "/api/flower/{id}": {
             "get": {
                 "tags": [
                     "flower"
@@ -143,6 +152,7 @@
                                 "id": 5,
                                 "typeflower": "Tulip",
                                 "florist": "kezia",
+                                "cover": "https://th.bing.com/th/id/OIP.7pUhm2B52MhYIWgN1AWTGAHaHY?rs=1&pid=ImgDetMain",
                                 "price": 85000,
                                 "description": "With flower we can know what they want to tell without really speakup"
                             }
@@ -151,7 +161,7 @@
                 },
                 "responses": {
                     "404": {
-                        "description": "Item not found",
+                        "description": "item not found",
                         "content": {
                             "application/json": {
                                 "schema": {}
@@ -190,7 +200,7 @@
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "format": "int64"
+                            "format": "int6    4"
                         }
                     }
                 ],

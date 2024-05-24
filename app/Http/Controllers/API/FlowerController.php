@@ -18,7 +18,7 @@ class FlowerController extends Controller
 {
     /**
      * @OA\Get (
-     *      path="/api/flowers",
+     *      path="/api/flower",
      *      tags={"flower"},
      *      summary="Display a listing of items",
      *      operationId="index",
@@ -37,10 +37,20 @@ class FlowerController extends Controller
 
     /**
      * @OA\Post(
-     *    path="/api/flowers",
+     *    path="/api/flower",
      *    tags={"flower"},
      *    summary="Store a newly created item",
      *    operationId="store",
+     *    @OA\Response(
+     *        response=400,
+     *        description="invalid Input",
+     *        @OA\JsonContent()
+     * ),
+     *  @OA\Response(
+     *        response=201,
+     *        description="Successful",
+     *        @OA\JsonContent()
+     *    ),
      *    @OA\RequestBody(
      *        required=true,
      *        description="Request body description",
@@ -50,15 +60,11 @@ class FlowerController extends Controller
      *                "id" : 5,
      *                "typeflower": "Tulip", 
      *                "florist": "kezia",
+     *                "cover":"https://th.bing.com/th/id/OIP.7pUhm2B52MhYIWgN1AWTGAHaHY?rs=1&pid=ImgDetMain",
      *                "price": 85000, 
      *                "description": "With flower we can know what they want to tell without really speakup"
      *            }
-     *        )
-     *    ),
-     *    @OA\Response(
-     *        response=201,
-     *        description="Successful",
-     *        @OA\JsonContent()
+     *        ),
      *    )
      * )
      */
@@ -84,7 +90,7 @@ class FlowerController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/flowers/{id}",
+     *     path="/api/flower/{id}",
      *     tags={"flower"},
      *     summary="Display the specified item",
      *     operationId="show",
@@ -112,7 +118,7 @@ class FlowerController extends Controller
      *              type="integer",
      *              format="int64"
      *          )
-     *     )
+     *     ),
      * )
      */
     public function show($id)
@@ -126,27 +132,13 @@ class FlowerController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/flowers/{id}",
+     *     path="/api/flower/{id}",
      *     tags={"flower"},
      *     summary="Update the specified item",
      *     operationId="update",
-     *     @OA\RequestBody(
-     *        required=true,
-     *        description="Request body description",
-     *        @OA\JsonContent(
-     *            ref="#/components/schemas/Flower",
-     *            example={
-     *                "id":5,
-     *                "typeflower": "Tulip", 
-     *                "florist": "kezia",
-     *                "price": 85000, 
-     *                "description": "With flower we can know what they want to tell without really speakup"
-     *            }
-     *        )
-     *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Item not found",
+     *         description="item not found",
      *         @OA\JsonContent()
      *     ),
      *     @OA\Response(
@@ -168,8 +160,24 @@ class FlowerController extends Controller
      *              type="integer",
      *              format="int64"
      *          )
+     *     ),
+     *     @OA\RequestBody(
+     *        required=true,
+     *        description="Request body description",
+     *        @OA\JsonContent(
+     *            ref="#/components/schemas/Flower",
+     *            example={
+     *                "id":5,
+     *                "typeflower": "Tulip", 
+     *                "florist": "kezia",
+     *                "cover":"https://th.bing.com/th/id/OIP.7pUhm2B52MhYIWgN1AWTGAHaHY?rs=1&pid=ImgDetMain",
+     *                "price": 85000, 
+     *                "description": "With flower we can know what they want to tell without really speakup"
+     *            }
+     *        ),
      *     )
      * )
+     *  
      */
     public function update(Request $request, $id)
     {
@@ -195,7 +203,7 @@ class FlowerController extends Controller
 
     /**
      * @OA\Delete(
-     *      path="/api/flowers/{id}",
+     *      path="/api/flower/{id}",
      *      tags={"flower"},
      *      summary="Remove the specified item",
      *      operationId="destroy",
@@ -221,9 +229,9 @@ class FlowerController extends Controller
      *          required=true,
      *          @OA\Schema(
      *              type="integer",
-     *              format="int64"
+     *              format="int6    4"
      *          )
-     *      )
+     *      ),
      * )
      */
     public function destroy($id)
