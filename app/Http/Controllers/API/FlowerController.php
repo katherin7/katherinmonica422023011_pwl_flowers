@@ -65,7 +65,8 @@ class FlowerController extends Controller
      *                "description": "With flower we can know what they want to tell without really speakup"
      *            }
      *        ),
-     *    )
+     *    ),
+     *          security={{"passport_token_ready":{}, "passport":{}}}
      * )
      */
     public function store(Request $request)
@@ -175,7 +176,8 @@ class FlowerController extends Controller
      *                "description": "With flower we can know what they want to tell without really speakup"
      *            }
      *        ),
-     *     )
+     *     ),
+     *      security={{"passport_token_ready":{}, "passport":{}}}
      * )
      *  
      */
@@ -230,8 +232,9 @@ class FlowerController extends Controller
      *          @OA\Schema(
      *              type="integer",
      *              format="int6    4"
-     *          )
+     *          ),
      *      ),
+     *          security={{"passport_token_ready":{}, "passport":{}}}
      * )
      */
     public function destroy($id)
