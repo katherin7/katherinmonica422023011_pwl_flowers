@@ -197,7 +197,7 @@ class FlowerController extends Controller
                 throw new HttpException(400, $validator->messages()->first());
             }
             $flower->fill($request->all())->save();
-            return response()->json(['message' => 'Updated successfully'], 200);
+            return response()->json(['message' => 'Updated successfully :)'], 200);
         } catch (\Exception $exception) {
             throw new HttpException(400, "Invalid data ({$exception->getMessage()})");
         }
@@ -231,7 +231,7 @@ class FlowerController extends Controller
      *          required=true,
      *          @OA\Schema(
      *              type="integer",
-     *              format="int6    4"
+     *              format="int64"
      *          ),
      *      ),
      *          security={{"passport_token_ready":{}, "passport":{}}}
@@ -246,7 +246,7 @@ class FlowerController extends Controller
 
         try {
             $flower->delete();
-            return response()->json(['message' => 'Deleted successfully'], 200);
+            return response()->json(['message' => 'congrats your delete is done'], 200);
         } catch (\Exception $exception) {
             throw new HttpException(400, "Invalid data: {$exception->getMessage()}");
         }

@@ -110,10 +110,10 @@ public function login(Request $request){
                     200
                 );
             } else{
-                return response()->jason(array('message'=>'Password mismatch'), 400);
+                return response()->jason(array('message'=>'Password tidak cocok'), 400);
             }
         } else {
-            return response()->json(array('message'=>'User does not exist'), 400);
+            return response()->json(array('message'=>'User tidak ditemukan'), 400);
         }
     } catch(\Exception $exception) {
         throw new HttpException(400, "Invalid data: {$exception->getMessage()}");
@@ -139,7 +139,7 @@ public function login(Request $request){
  *      @OA\Parameter(
  *          name="email",
  *          in="path",
- *          description="User Email",
+ *          description="masukan user email",
  *          required=true,
  *          @OA\Schema(
  *              type="string",
@@ -152,7 +152,7 @@ public function login(Request $request){
     try {
         $token = $request->user()->token();
         $token->revoke();
-        return response()->json(array('message'=>'Successfully logged out!'),
+        return response()->json(array('message'=>'Logout anda berhasil'),
         200);
     } catch(\Exception $exception) {
         throw new HttpException(400, "Invalid data: {$exception->getMessage()}");
