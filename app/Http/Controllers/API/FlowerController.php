@@ -10,7 +10,7 @@ use App\Models\Flower;
 use OpenApi\Annotations as OA;
 
 /**
- * Class FlowerController.
+ * Class Flowercontroller.
  * @author Katherin <katherin.422023011@civitas.ukrida.ac.id>
  */
 
@@ -24,12 +24,11 @@ class FlowerController extends Controller
      *      operationId="index",
      *      @OA\Response(
      *          response=200,
-     *          description="Successful",
+     *          description="successful",
      *          @OA\JsonContent()
      *      )
      * )
      */
-
     public function index()
     {
         return Flower::get();
@@ -43,10 +42,10 @@ class FlowerController extends Controller
      *    operationId="store",
      *    @OA\Response(
      *        response=400,
-     *        description="invalid Input",
+     *        description="Invalid Input",
      *        @OA\JsonContent()
-     * ),
-     *  @OA\Response(
+     *    ),
+     *    @OA\Response(
      *        response=201,
      *        description="Successful",
      *        @OA\JsonContent()
@@ -58,12 +57,12 @@ class FlowerController extends Controller
      *            ref="#/components/schemas/Flower",
      *            example={
      *                "id" : 5,
-     *                "typeflower": "Tulip", 
+     *                "jenis_bunga": "Tulip", 
      *                "florist": "kezia",
-     *                "cover":"https://th.bing.com/th/id/OIP.7pUhm2B52MhYIWgN1AWTGAHaHY?rs=1&pid=ImgDetMain",
      *                "price": 85000, 
-     *                "description": "With flower we can know what they want to tell without really speakup"
-     *            }
+     *                "description": "With flower we can know what they want to tell without really speakup",
+     *                "image":"https://www.bing.com/th?id=OIP.wlOURUeyYHKMa1xzVmRQxwHaHa&w=206&h=206&c=8&rs=1&qlt=90&o=6&dpr=1.1&pid=3.1&rm=2",
+     *              }
      *        ),
      *    ),
      *          security={{"passport_token_ready":{}, "passport":{}}}
@@ -73,7 +72,7 @@ class FlowerController extends Controller
     {
         try {
             $validator = Validator::make($request->all(),[
-                'typeflower' => 'required|unique:flowers',
+                'jenis_bunga' => 'required|unique:flowers',
                 'florist' => 'required|max:100',
             ]);
             if ($validator->fails()){
@@ -81,7 +80,6 @@ class FlowerController extends Controller
             }
             $flower = new Flower;
             $flower->fill($request->all())->save();
-
             return $flower;
 
         } catch (\Exception $exception) {
@@ -97,7 +95,7 @@ class FlowerController extends Controller
      *     operationId="show",
      *     @OA\Response(
      *         response=404,
-     *         description="item not found",
+     *         description="Item not found",
      *         @OA\JsonContent()
      *     ),
      *     @OA\Response(
@@ -169,11 +167,11 @@ class FlowerController extends Controller
      *            ref="#/components/schemas/Flower",
      *            example={
      *                "id":5,
-     *                "typeflower": "Tulip", 
+     *                "jenis_bunga": "Tulip", 
      *                "florist": "kezia",
-     *                "cover":"https://th.bing.com/th/id/OIP.7pUhm2B52MhYIWgN1AWTGAHaHY?rs=1&pid=ImgDetMain",
      *                "price": 85000, 
-     *                "description": "With flower we can know what they want to tell without really speakup"
+     *                "description": "With flower we can know what they want to tell without really speakup",
+     *                "image":"https://th.bing.com/th/id/OIP.7pUhm2B52MhYIWgN1AWTGAHaHY?rs=1&pid=ImgDetMain",
      *            }
      *        ),
      *     ),
@@ -185,21 +183,21 @@ class FlowerController extends Controller
     {
         $flower = Flower::find($id);
         if (!$flower) {
-            throw new HttpException(400, "Item not found");
+            throw new HttpException(404, "Item not found");
         }
 
         try {
             $validator = Validator::make($request->all(), [
-                'typeflower' => 'required|unique:flowers',
+                'jenis_bunga' => 'required|unique:flowers',
                 'florist' => 'required|max:100',
             ]);
             if ($validator->fails()) {
                 throw new HttpException(400, $validator->messages()->first());
             }
             $flower->fill($request->all())->save();
-            return response()->json(['message' => 'Updated successfully :)'], 200);
+            return response()->json(array('message' => 'Updated successfully :)'), 200);
         } catch (\Exception $exception) {
-            throw new HttpException(400, "Invalid data ({$exception->getMessage()})");
+            throw new HttpException(400, "Invalid data : {$exception->getMessage()})");
         }
     }
 
@@ -232,7 +230,7 @@ class FlowerController extends Controller
      *          @OA\Schema(
      *              type="integer",
      *              format="int64"
-     *          ),
+     *          )
      *      ),
      *          security={{"passport_token_ready":{}, "passport":{}}}
      * )
@@ -246,7 +244,7 @@ class FlowerController extends Controller
 
         try {
             $flower->delete();
-            return response()->json(['message' => 'congrats your delete is done'], 200);
+            return response()->json(array('message' => 'congrats your delete is done'), 200);
         } catch (\Exception $exception) {
             throw new HttpException(400, "Invalid data: {$exception->getMessage()}");
         }

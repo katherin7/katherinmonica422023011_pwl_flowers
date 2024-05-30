@@ -16,7 +16,7 @@ use OpenApi\Annotations as OA ;
  * @OA\Schema(
  *     description="Flower model",
  *     title="Flower model",
- *     required={"typeflower","florist"},
+ *     required={"id","jenis_bunga"},
  *     @OA\Xml(
  *          name="Flower")
  * )
@@ -30,7 +30,10 @@ class Flower extends Model
     protected $fillable = [
         'id',
         'jenis_bunga',
+        'florist',
         'price',
+        'description',
+        'image',
         'created_at',
         'created_by',
         'updated_at',

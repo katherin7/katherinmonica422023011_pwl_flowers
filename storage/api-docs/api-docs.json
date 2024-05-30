@@ -26,13 +26,13 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "components/schemas/User"
+                                "$ref": "#/components/schemas/User"
                             },
                             "example": {
                                 "name": "keshie yordan",
                                 "email": "yoyo123@gmail.com",
                                 "password": "lucu123",
-                                "password_conformation": "lucu123"
+                                "password_confirmation": "lucu123"
                             }
                         }
                     }
@@ -70,7 +70,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "components/schemas/User"
+                                "$ref": "#/components/schemas/User"
                             },
                             "example": {
                                 "email": "yoyo123@gmail.com",
@@ -88,7 +88,7 @@
                             }
                         }
                     },
-                    "201": {
+                    "200": {
                         "description": "Successful",
                         "content": {
                             "application/json": {
@@ -110,7 +110,7 @@
                     {
                         "name": "email",
                         "in": "path",
-                        "description": "User Email",
+                        "description": "masukan user email",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -126,7 +126,7 @@
                             }
                         }
                     },
-                    "201": {
+                    "200": {
                         "description": "Successful",
                         "content": {
                             "application/json": {
@@ -152,7 +152,7 @@
                 "operationId": "index",
                 "responses": {
                     "200": {
-                        "description": "Successful",
+                        "description": "successful",
                         "content": {
                             "application/json": {
                                 "schema": {}
@@ -177,18 +177,18 @@
                             },
                             "example": {
                                 "id": 5,
-                                "typeflower": "Tulip",
+                                "jenis_bunga": "Tulip",
                                 "florist": "kezia",
-                                "cover": "https://th.bing.com/th/id/OIP.7pUhm2B52MhYIWgN1AWTGAHaHY?rs=1&pid=ImgDetMain",
                                 "price": 85000,
-                                "description": "With flower we can know what they want to tell without really speakup"
+                                "description": "With flower we can know what they want to tell without really speakup",
+                                "image": "https://www.bing.com/th?id=OIP.wlOURUeyYHKMa1xzVmRQxwHaHa&w=206&h=206&c=8&rs=1&qlt=90&o=6&dpr=1.1&pid=3.1&rm=2"
                             }
                         }
                     }
                 },
                 "responses": {
                     "400": {
-                        "description": "invalid Input",
+                        "description": "Invalid Input",
                         "content": {
                             "application/json": {
                                 "schema": {}
@@ -233,7 +233,7 @@
                 ],
                 "responses": {
                     "404": {
-                        "description": "item not found",
+                        "description": "Item not found",
                         "content": {
                             "application/json": {
                                 "schema": {}
@@ -286,11 +286,11 @@
                             },
                             "example": {
                                 "id": 5,
-                                "typeflower": "Tulip",
+                                "jenis_bunga": "Tulip",
                                 "florist": "kezia",
-                                "cover": "https://th.bing.com/th/id/OIP.7pUhm2B52MhYIWgN1AWTGAHaHY?rs=1&pid=ImgDetMain",
                                 "price": 85000,
-                                "description": "With flower we can know what they want to tell without really speakup"
+                                "description": "With flower we can know what they want to tell without really speakup",
+                                "image": "https://th.bing.com/th/id/OIP.7pUhm2B52MhYIWgN1AWTGAHaHY?rs=1&pid=ImgDetMain"
                             }
                         }
                     }
@@ -342,7 +342,7 @@
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "format": "int6    4"
+                            "format": "int64"
                         }
                     }
                 ],
@@ -387,11 +387,23 @@
                 "title": "Flower model",
                 "description": "Flower model",
                 "required": [
-                    "typeflower",
-                    "florist"
+                    "id",
+                    "jenis_bunga"
                 ],
                 "xml": {
                     "name": "Flower"
+                }
+            },
+            "User":{
+                "title":"User model",
+                "description":"User model",
+                "required":[
+                    "name",
+                    "email",
+                    "password"
+                ],
+                "xml":{
+                    "name":"User"
                 }
             }
         },
