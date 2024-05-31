@@ -8,6 +8,19 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
+/**
+ * Class User.
+ * 
+ * @author Katherin <katherin.422023011@civitas.ukrida.ac.id>
+ * 
+ * @OA\Schema(
+ *     description="User model",
+ *     title="User model",
+ *     @OA\Xml(
+ *          name="User")
+ * )
+ */
+
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;

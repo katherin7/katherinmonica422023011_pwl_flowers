@@ -394,16 +394,11 @@
                     "name": "Flower"
                 }
             },
-            "User":{
-                "title":"User model",
-                "description":"User model",
-                "required":[
-                    "name",
-                    "email",
-                    "password"
-                ],
-                "xml":{
-                    "name":"User"
+            "User": {
+                "title": "User model",
+                "description": "User model",
+                "xml": {
+                    "name": "User"
                 }
             }
         },
