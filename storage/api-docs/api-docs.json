@@ -150,6 +150,58 @@
                 ],
                 "summary": "Display a listing of items",
                 "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "_page",
+                        "in": "query",
+                        "description": "current page",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "_limit",
+                        "in": "query",
+                        "description": "max item in a page",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 10
+                        }
+                    },
+                    {
+                        "name": "_search",
+                        "in": "query",
+                        "description": "word to search",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "_florist",
+                        "in": "query",
+                        "description": "search by florist like name",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "_sort_by",
+                        "in": "query",
+                        "description": "word to search",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "latest"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful",
@@ -178,7 +230,7 @@
                             "example": {
                                 "id": 5,
                                 "jenis_bunga": "Tulip",
-                                "florist": "kezia",
+                                "florist": "IM NAYEON",
                                 "price": 85000,
                                 "description": "With flower we can know what they want to tell without really speakup",
                                 "image": "https://www.bing.com/th?id=OIP.wlOURUeyYHKMa1xzVmRQxwHaHa&w=206&h=206&c=8&rs=1&qlt=90&o=6&dpr=1.1&pid=3.1&rm=2"
